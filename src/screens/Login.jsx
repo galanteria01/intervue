@@ -11,10 +11,7 @@ export default function Login() {
   const [show, setShow] = React.useState(false)
   const [values, setValues] = React.useState(initialValues)
   const handleClick = () => setShow(!show)
-  const handleChange = (e) => {
-    const [name, value] = e.target;
-    setValues({ ...values, name: value });
-  }
+  const handleLogin = () => {}
   return (
     <Flex
       w={'100vw'}
@@ -30,7 +27,7 @@ export default function Login() {
             placeholder='Email'
             name='email'
             value={values.email}
-            onChange={handleChange}
+            onChange={(e) =>  setValues({...values, email: e.target.value})}
           />
           <InputGroup>
             <Input
@@ -39,7 +36,7 @@ export default function Login() {
               placeholder='Password'
               name="password"
               value={values.password}
-              onChange={handleChange}
+              onChange={(e) =>  setValues({...values, password: e.target.value})}
             />
             <InputRightElement width='4.5rem'>
               <IconButton ml={8} bg={'transparent'} onClick={handleClick}>
