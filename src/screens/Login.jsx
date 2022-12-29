@@ -1,6 +1,8 @@
 import { Button, Container, Flex, Heading, IconButton, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { supabase } from '../utils/supabaseClient'
+import { useToast } from '@chakra-ui/react'
 
 const initialValues = {
   email: "",
@@ -10,8 +12,16 @@ const initialValues = {
 export default function Login() {
   const [show, setShow] = React.useState(false)
   const [values, setValues] = React.useState(initialValues)
+  const toast = useToast()
   const handleClick = () => setShow(!show)
-  const handleLogin = () => {}
+  const handleLogin = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ username: values.username, email: values.email, password: values.password })
+      console.log(data)
+    } catch (e) {
+      alert(e.message)
+    } finally { }
+  }
   return (
     <Flex
       w={'100vw'}
@@ -25,9 +35,10 @@ export default function Login() {
           <Input
             variant={'filled'}
             placeholder='Email'
+            type='email'
             name='email'
             value={values.email}
-            onChange={(e) =>  setValues({...values, email: e.target.value})}
+            onChange={(e) => setValues({ ...values, email: e.target.value })}
           />
           <InputGroup>
             <Input
@@ -36,7 +47,7 @@ export default function Login() {
               placeholder='Password'
               name="password"
               value={values.password}
-              onChange={(e) =>  setValues({...values, password: e.target.value})}
+              onChange={(e) => setValues({ ...values, password: e.target.value })}
             />
             <InputRightElement width='4.5rem'>
               <IconButton ml={8} bg={'transparent'} onClick={handleClick}>
@@ -44,7 +55,7 @@ export default function Login() {
               </IconButton>
             </InputRightElement>
           </InputGroup>
-          <Button>Login</Button>
+          <Button onClick={handleLogin}>Login</Button>
         </VStack>
       </Container>
     </Flex>

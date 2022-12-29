@@ -17,11 +17,12 @@ export default function Signup() {
   const handleClick = () => setShow(!show)
   const handleSignup = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOtp({ email: values.email })
+      const data = await supabase.auth.signUp({ email: values.email, password: values.password })
+      console.log(data)
     } catch (e) {
       alert(e.message)
     } finally {
-      navigate('/')
+      // navigate('/')
     }
   }
   return (
@@ -45,6 +46,7 @@ export default function Signup() {
             variant={'filled'}
             placeholder='Email'
             name='email'
+            type='email'
             value={values.email}
             onChange={(e) => setValues({ ...values, email: e.target.value })}
           />

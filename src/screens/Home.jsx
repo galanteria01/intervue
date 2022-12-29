@@ -22,7 +22,7 @@ export default function Home() {
           <Button mx={2} colorScheme={'red'}>
             Submit Review
           </Button>
-          <Button mx={2} color={'red.100'}>
+          <Button mx={2} color={'red.200'}>
             Clear
           </Button>
         </Flex>

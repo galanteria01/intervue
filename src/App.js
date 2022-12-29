@@ -1,30 +1,9 @@
 import React from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter } from 'react-router-dom';
 import { Home, Login, Signup } from './screens';
 import { supabase } from './utils/supabaseClient';
 import { useDispatch } from 'react-redux';
-import { addSession } from './features/session/sessionSlice';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <Home />
-    )
-  },
-  {
-    path: '/login',
-    element: (
-      <Login />
-    )
-  },
-  {
-    path: '/signup',
-    element: (
-      <Signup />
-    )
-  }
-])
+import { addSession, selectSession } from './features/session/sessionSlice';
 
 function App() {
   const dispatch = useDispatch()
@@ -37,8 +16,16 @@ function App() {
       dispatch(addSession(session))
     })
   }, [])
+  const session = selectSession()
+  console.log(session)
   return (
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
